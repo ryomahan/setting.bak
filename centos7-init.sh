@@ -1,1 +1,1 @@
-# centos7 init
+# CentOS 7 init
