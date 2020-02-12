@@ -6,10 +6,10 @@ To Do List:
 
 - [x] tmux config file
 
-- [x] oh-my-zsh custom theme file
+- [x] ttrss docker compose file
 
 - [x] rsshub docker compose file 
 
-- [x] ttrss docker compose file
+- [x] oh-my-zsh custom theme file
 
 - [ ] 自动化部署
