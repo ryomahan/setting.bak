@@ -1,11 +1,15 @@
 To Do List:
 
-- [x] vim 配置文件
+- [x] vim config file
 
-- [x] zsh 配置文件
+- [x] zsh config file
 
-- [x] tmux 配置文件
+- [x] tmux config file
 
-- [x] oh-my-zsh 自定义主题文件
+- [x] oh-my-zsh custom theme file
+
+- [x] rsshub docker compose file 
+
+- [x] ttrss docker compose file
 
 - [ ] 自动化部署
