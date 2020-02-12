@@ -1,0 +1,6 @@
+0.0.0.0
+root /var/www/html
+log stdout
+errors stderr
+internal /tt-rss/cache
+fastcgi / app:9000 php
