@@ -1,5 +1,6 @@
-## Tips
+# Tips
 1. pay attention to nginx's config file, especially the config of proxy
+2. latest fever plugin download url - https://github.com/DigitalDJ/tinytinyrss-fever-plugin
 
 ## Reference
 [Neverland: 用 Tiny Tiny RSS 自建 RSS 服务][1]
