@@ -8,6 +8,18 @@ set number            " open number
 set backspace=2       " make <backspace> useful
 set nocompatible      " hear of anything that might helpful
 set encoding=utf-8    " set codde
+set tabstop=4         " set tab to four spaces
+set softtabstop=4     " set backspace to four spaces 
+set shiftwidth=4      " 
+set expandtab         " use space instead of tab
+set autoindent        " auto tab
+
+" Add separate settings for different file types
+if has("autocmd")
+    autocmd FileType javascript set tabstop=2
+    autocmd FileType javascript set softtabstop=2
+    autocmd FileType javascript set shiftwidth=2
+endif
 
 " Set map leader for myself
 let mapleader=','
@@ -35,7 +47,6 @@ inoremap <c-e> <end>
 inoremap <c-a> <home>
 
 " Set notes shortcut keys(use autocmd and noremap)
-" TODO
 
 " Set abbreviations
 iabbrev @@ ryomahan1996@gmail.com
