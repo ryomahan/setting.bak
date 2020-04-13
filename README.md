@@ -12,4 +12,6 @@ To Do List:
 
 - [x] oh-my-zsh custom theme file
 
+- [ ] centos7 init
+
 - [ ] 自动化部署
