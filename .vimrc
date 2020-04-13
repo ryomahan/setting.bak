@@ -1,7 +1,7 @@
-" Ryoma's vimrc for mac
-" 1. brew install vim (to install latest vim)
-" 2. git clone https://github.com/gmarik/vundle.git
-" 3. vim +PluginInstall +qall
+" Ryoma's vimrc
+" 1. git clone https://github.com/VundleVim/Vundle.vim.git
+" ~/.vim/bundle/Vundle.vim
+" 2. vim +PluginInstall +qall
 
 " System base set
 set number            " open number
@@ -13,6 +13,19 @@ set softtabstop=4     " set backspace to four spaces
 set shiftwidth=4      " 
 set expandtab         " use space instead of tab
 set autoindent        " auto tab
+
+filetype off
+
+" Vundle Plugin
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'morhetz/gruvbox'
+
+call vundle#end()
+
+filetype plugin indent on
 
 " Add separate settings for different file types
 if has("autocmd")
@@ -55,3 +68,6 @@ iabbrev @@ ryomahan1996@gmail.com
 set laststatus=2 " always show statusline
 " set statusline=%f\ |\ %{&ff}\ |\ [(%l,\ %v),\ %p] 
 set statusline=%F%m%r%h%w%=\ [(%04l,%04v),\ %p%%]
+
+" color theme
+colorscheme gruvbox
