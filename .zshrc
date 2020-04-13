@@ -8,18 +8,33 @@ ZSH_THEME="custom"
 plugins=(
     git
     zsh-syntax-highlighting
+    zsh-autosuggestions
 )
 
 HIST_STAMPS="yyyy-mm-dd"
 
-# User configuration
+# Custom configuration
 
 # Change Proxy By Alias
-alias proxy="export ALL_PROXY=socks5://127.0.0.1:1086"
+alias proxy="export ALL_PROXY=socks5://127.0.0.1:1080"
 alias unproxy="unset ALL_PROXY"
 
 # ssh shortcut
-alias logname="ssh root@xxx.xxx.xxx.xxx"
+alias huawei="ssh huawei"
+alias ipms="ssh root@39.96.26.34"
+alias isms-basic="ssh isms-basic"
+alias isms-master="ssh isms-master"
+alias isms="ssh root@47.93.204.176"
+
+# alias ali="ssh root@47.240.28.83"
+#alias isms-master="ssh -p 7521 root@114.215.127.193"
+#alias isms-basic="ssh -p 7521 root@47.104.219.192"
+
+# list my computers ip
+alias ip="cat ~/.ip_list"
+
+# cd shortcut
+alias wiki="cd ~/Documents/write/wiki"
 
 # redis
 alias redis="redis-server /usr/local/etc/redis.conf"
@@ -38,9 +53,23 @@ fi
 
 # nvm
 #export NVM_DIR="$HOME/.nvm"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+# node
+export PATH=/Users/ryoma/.nvm/versions/node/v12.14.1/bin:$PATH
+
+# mysql
+export PATH=/usr/local/Cellar/mysql@5.7/5.7.28/bin:$PATH
+
+# openssl
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+
+# ssh agent
+# eval $(ssh-agent) >> ~/.ssh/agent.pid
 
 export LC_ALL=en_US.UTF-8
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 source $ZSH/oh-my-zsh.sh
