@@ -4,7 +4,8 @@
 " 3. :PlugInstall
 
 " System base set
-syntax on             " highlight
+syntax      on        " highlight
+colorscheme gruvbox   " set colorscheme
 
 set number            " open number
 set backspace=2       " make <backspace> useful
