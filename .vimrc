@@ -1,7 +1,7 @@
 " Ryoma's vimrc
 " 1. install latest vim
-" 2. git clone https://github.com/gmarik/vundle.git
-" 3. vim +PluginInstall +qall
+" 2. install vim-plug | copy https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim to ~/.vim/autoload/plug.vim
+" 3. :PlugInstall
 
 " System base set
 syntax on             " highlight
@@ -68,3 +68,12 @@ set laststatus=2 " always show statusline
 
 " set statusline=%f\ |\ %{&ff}\ |\ [(%l,\ %v),\ %p] 
 set statusline=%F%m%r%h%w%=\ [(%04l,%04v),\ %p%%]
+
+" Plugin
+call plug#begin('~/.vim/plugged')
+Plug 'preservim/nerdtree'
+Plug 'davidhalter/jedi-vim'
+call plug#end()
+
+"""" jedi-vim setting
+autocmd FileType python setlocal completeopt-=preview
