@@ -3,9 +3,19 @@
 " 2. install vim-plug | copy https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim to ~/.vim/autoload/plug.vim
 " 3. :PlugInstall
 
+" Plugin
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
+Plug 'preservim/nerdtree'
+Plug 'davidhalter/jedi-vim'
+call plug#end()
+
+"""" jedi-vim setting
+autocmd FileType python setlocal completeopt-=preview
+
 " System base set
 syntax      on        " highlight
-colorscheme gruvbox   " set colorscheme
+colorscheme gruvbox
 
 set number            " open number
 set backspace=2       " make <backspace> useful
@@ -69,12 +79,3 @@ set laststatus=2 " always show statusline
 
 " set statusline=%f\ |\ %{&ff}\ |\ [(%l,\ %v),\ %p] 
 set statusline=%F%m%r%h%w%=\ [(%04l,%04v),\ %p%%]
-
-" Plugin
-call plug#begin('~/.vim/plugged')
-Plug 'preservim/nerdtree'
-Plug 'davidhalter/jedi-vim'
-call plug#end()
-
-"""" jedi-vim setting
-autocmd FileType python setlocal completeopt-=preview
