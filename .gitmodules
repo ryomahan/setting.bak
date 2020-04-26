@@ -1,0 +1,12 @@
+[submodule "zsh-autosuggestions"]
+    path = oh-my-zsh/custom/plugins/zsh-autosuggestions
+    url = https://github.com/zsh-users/zsh-autosuggestions.git
+
+[submodule "zsh-proxy"]
+    path = oh-my-zsh/custom/plugins/zsh-proxy 
+    url = https://github.com/SukkaW/zsh-proxy.git
+
+[submodule "zsh-syntax-highlighting"]
+    path = oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+
