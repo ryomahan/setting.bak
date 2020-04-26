@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
 Plug 'davidhalter/jedi-vim'
+Plug 'vim-airline/vim-airline'
 call plug#end()
 
 """" jedi-vim setting
@@ -16,6 +17,7 @@ autocmd FileType python setlocal completeopt-=preview
 " System base set
 syntax      on        " highlight
 colorscheme gruvbox
+set background=dark
 
 set number            " open number
 set backspace=2       " make <backspace> useful
@@ -75,7 +77,7 @@ let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
 " Set statusline
-set laststatus=2 " always show statusline
+"set laststatus=2 " always show statusline
 
 " set statusline=%f\ |\ %{&ff}\ |\ [(%l,\ %v),\ %p] 
-set statusline=%F%m%r%h%w%=\ [(%04l,%04v),\ %p%%]
+"set statusline=%F%m%r%h%w%=\ [(%04l,%04v),\ %p%%]
