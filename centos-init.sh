@@ -1,5 +1,14 @@
 # CentOS 7 init
 
+## yum update
+yum update -y
+
+## docker
+
+## java
+
+## maven
+
 ## git init
 if [ -x "$(command -v git)" ]; then
     echo "git is readly."
@@ -26,7 +35,22 @@ else
     echo "export PATH=$PATH:/root/.pyenv/bin" >> /etc/profile
     echo 'eval "$(pyenv init -)"' >> /etc/profile
 
+    echo "# Pyenv" >> ~/.zshrc
+    echo "export PATH=~/.pyenv/bin:$PATH"
+    echo 'eval "$(pyenv init -)"' 
+
     # refresh
     source /etc/profile
+    source ~/.zshrc
+
+    # git clone pyenv virtualenv
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+    
+    echo 'eval "$(pyenv virtualenv-init -)"' >> /etc/profile
+    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+
+    source /etc/profile
+    source ~/.zshrc
+
     echo "pyenv is readly."
 fi
