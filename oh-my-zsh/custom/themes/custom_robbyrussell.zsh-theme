@@ -1,5 +1,5 @@
 virtualenv_prompt_info() {
-  if [ -n $VIRTUAL_ENV ]; then
+  if [ -n "$VIRTUAL_ENV" ]; then
     VIRTUAL_ENV_NAME=`basename $VIRTUAL_ENV`
     echo -n "($VIRTUAL_ENV_NAME)"
   fi
