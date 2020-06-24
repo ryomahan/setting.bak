@@ -3,6 +3,9 @@
 ## yum update
 yum update -y
 
+## base env install
+yum install -y gcc-c++ wget openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel xz-devel tk-devel gdbm-devel libffi-devel libxml*
+
 ## docker
 
 ## java
