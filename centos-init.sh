@@ -4,7 +4,7 @@
 yum update -y
 
 ## base env install
-yum install -y gcc-c++ wget openssl-devel bzip2-devel expat-devel gdbm-devel readline-devel sqlite-devel xz-devel tk-devel gdbm-devel libffi-devel libxml*
+yum install -y gcc-c++ wget expat-devel gdbm-devel libffi-devel libxml* zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
 
 ## docker
 
@@ -28,9 +28,6 @@ fi
 if [ -x "$(command -v pyenv)" ]; then
     echo "pyenv is readly."
 else
-    # 依赖安装
-    yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel -y
-
     # git clone pyenv
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
