@@ -54,3 +54,10 @@ else
 
     echo "pyenv is readly."
 fi
+
+## zsh
+if [ -x "$(command -v zsh)" ]; then
+    echo "zsh is readly."
+else
+    yum isntall -y zsh
+fi
