@@ -1,5 +1,13 @@
 # CentOS 7 init
 
+## cache setting bak absolute path
+root_absolute_path=$(dirname $(
+    cd "$(dirname "$0")"
+    pwd
+))
+
+script_path=$root_absolute_path"/script"
+
 ## yum update
 yum update -y
 
@@ -61,3 +69,10 @@ if [ -x "$(command -v zsh)" ]; then
 else
     yum isntall -y zsh
 fi
+
+## oh-my-zsh
+cd $script_path
+sh ./ohmyzshinstall.sh
+echo "oh my zsh is readly."
+
+

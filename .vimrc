@@ -7,12 +7,31 @@
 call plug#begin('~/.vim/plugged')
 Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
-Plug 'davidhalter/jedi-vim'
 Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 """" jedi-vim setting
-autocmd FileType python setlocal completeopt-=preview
+" autocmd FileType python setlocal completeopt-=preview
+
+"""" YouCompleteMe setting
+let g:ycm_min_num_of_chars_for_completion=3
+let g:ycm_autoclose_preview_window_after_completion=1
+let g:ycm_complete_in_comments=1
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+
+function! MyTabFunction ()
+    let line = getline('.')
+    let substr = strpart(line, -1, col('.')+1)
+    let substr = matchstr(substr, "[^ \t]*$")
+    if strlen(substr) == 0
+        return "\<tab>"
+    endif
+    return pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
+endfunction
+inoremap <tab> <c-r>=MyTabFunction()<cr>
 
 " System base set
 syntax      on        " highlight
