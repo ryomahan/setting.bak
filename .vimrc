@@ -9,7 +9,6 @@ Plug 'morhetz/gruvbox'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
-Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 """" jedi-vim setting

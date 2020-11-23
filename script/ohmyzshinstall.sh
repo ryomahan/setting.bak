@@ -169,7 +169,7 @@ setup_shell() {
 
 	# Prompt for user choice on changing the default login shell
 	printf "${YELLOW}Do you want to change your default shell to zsh? [Y/n]${RESET} "
-	read opt
+    opt=y
 	case $opt in
 		y*|Y*|"") echo "Changing the shell..." ;;
 		n*|N*) echo "Shell change skipped."; return ;;
