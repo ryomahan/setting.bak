@@ -6,12 +6,8 @@ To Do List:
 
 - [x] tmux config file
 
-- [x] ttrss docker compose file
-
-- [x] rsshub docker compose file 
-
 - [x] oh-my-zsh custom theme file
 
-- [x] centos7 init [2%]
+- [x] centos7 init
 
-- [x] 自动化部署 [1%]
+- [x] 自动化部署 [30%]
