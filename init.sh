@@ -57,6 +57,11 @@ init_install() {
     $INS install -y wget git lsof zsh epel-release
     judge "安装前置软件"
 
+    if [[ "${ID}" == "centos" ]]; then
+        $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel
+        judge "centos 前置软件安装"
+    fi
+
     # git 配置
     git config --global user.email "ryomahan1996@gmail.com"
     git config --global user.name "ryomahan"
