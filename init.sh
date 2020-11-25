@@ -58,7 +58,7 @@ init_install() {
     judge "安装前置软件"
 
     if [[ "${ID}" == "centos" ]]; then
-        $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel
+        $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
         judge "centos 前置软件安装"
     fi
 
