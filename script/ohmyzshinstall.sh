@@ -41,7 +41,7 @@ BRANCH=${BRANCH:-master}
 
 # Other options
 CHSH=${CHSH:-yes}
-RUNZSH=${RUNZSH:-yes}
+RUNZSH=${RUNZSH:-no}
 KEEP_ZSHRC=${KEEP_ZSHRC:-no}
 
 
