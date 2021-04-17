@@ -1,6 +1,6 @@
 export ZSH="/root/.oh-my-zsh"
 
-ZSH_THEME="ys"
+ZSH_THEME="custom_ys"
 
 # Plugin
 plugins=(
@@ -16,6 +16,7 @@ source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 # nvm
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -25,9 +26,5 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 export PATH=/root/.pyenv/bin:$PATH
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# custom
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
