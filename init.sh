@@ -54,7 +54,7 @@ init_install() {
     check_system
     # 安装前置软件
     $INS update -y
-    $INS install -y wget git lsof zsh gcc
+    $INS install -y wget git lsof zsh gcc make tar
     judge "安装前置软件"
 
     if [[ "${ID}" == "centos" ]]; then
