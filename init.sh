@@ -120,7 +120,6 @@ init_install() {
     judge "oh my zsh 配置同步"
 
     # 安装 git cz
-    nvm install --lts --latest-npm
     npm install -g commitizen cz-conventional-changelog
     echo '{"path": "cz-conventional-changelog"}' > ~/.czrc
     judge "安装 git cz"
