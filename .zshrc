@@ -7,7 +7,7 @@ ZSH_THEME="custom_ys"
 # oh my zsh plugins
 plugins=(
     git
-    zsh-proxy
+    # zsh-proxy
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -15,22 +15,22 @@ plugins=(
 HIST_STAMPS="yyyy-mm-dd"
 
 # Custom configuration
+export LC_ALL=en_US.UTF-8
 
-# add PATH
+## add PATH
 
-#### Pyenv
+### Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
+if which pyenv-activate > /dev/null;
+  then eval "$(pyenv init -)";
+fi
 if which pyenv-virtualenv-init > /dev/null;
   then eval "$(pyenv virtualenv-init -)";
 fi
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
-#### nvm
-#export NVM_DIR="$HOME/.nvm"
-#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-#[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+### n
+export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"
 
-export LC_ALL=en_US.UTF-8
 
 source $ZSH/oh-my-zsh.sh

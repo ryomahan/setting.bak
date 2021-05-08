@@ -52,14 +52,18 @@ judge() {
 
 init_install() {
     check_system
-    # 安装前置软件
+    # 安装通用前置软件
     $INS update -y
-    $INS install -y wget git lsof zsh gcc make tar
-    judge "安装前置软件"
+    $INS install -y curl wget git lsof zsh gcc make tar
+    judge "安装通用前置软件"
 
+    # 根据系统安装前置软件
     if [[ "${ID}" == "centos" ]]; then
         $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
-        judge "centos 前置软件安装"
+        judge "${ID} 前置软件安装"
+    elif [[ "${ID}" == "" ]]; then
+        sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+        judge "${ID} 前置软件安装"
     fi
 
     # git 配置
@@ -68,44 +72,65 @@ init_install() {
     git config --global push.default simple
     judge "进行 git 默认配置"
 
-    # 导入子模块
-    git submodule init
-    git submodule update
-
-    # 安装 vim-plug
-    cp ./.vimrc ~/.vimrc
-    mkdir -p /root/.vim/autoload
-    cd /root/.vim/autoload
-    wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    judge "安装 vim-plug"
-
-    # 切换到脚本目录
+    # 安装 oh my zsh
     cd $script_path
-
-    # 安装 oh my zsh、nvm 和 pyenv
     sh ./ohmyzshinstall.sh
-    sh ./nvminstall.sh
-    judge "安装 oh my zsh 和 nvm"
+    judge "安装 oh my zsh"
 
     cd $root_path
-    cp ./.zshrc-centos ~/.zshrc
-    cp -r ./oh-my-zsh/custom/* ~/.oh-my-zsh/custom/
+    # 安装 nodejs 版本控制器 n
+    curl -L https://git.io/n-install | bash
+    judge "安装 nodejs 版本控制器 n"
 
+    # 安装最新稳定版本 nodejs
+    n latest
+
+    # 安装 python 版本控制器 pyenv 以及其插件 pyenv-virtualenv
     if [ -x "$(command -v pyenv)" ]; then
         echo -e "${GreenBG} pyenv is readly. ${Font}"
         sleep 1
     else
         git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-        git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-vurtualenv
-        source ~/.zshrc
-        judge "安装 pyenv 和 pyenv-virtualenv"        
+        judge "安装 pyenv"        
     fi
+
+    if [ -x "$(command --version pyenv  virtualenv)" ]; then
+        echo -e "${GreenBG} pyenv-virtualenv is readly. ${Font}"
+        sleep 1
+    else
+        git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-vurtualenv
+        judge "安装 pyenv-virtualenv"
+    fi
+
+    # 安装 Python 3.8.10 作为默认版本
+    pyenv install 3.8.6
+    pyenv global 3.8.6
+    pyenv shell 3.8.6
+    pyenv local 3.8.6
+
+    # 导入脚本子模块（oh my zsh 插件）
+    git submodule init
+    git submodule update
+    judge "setting.bak 库子模块（oh my zsh 插件）引入"
+    
+    # 同步 oh my zsh 配置文件
+    cd $root_path
+    cp -r ./oh-my-zsh/custom/* ~/.oh-my-zsh/custom/
+    cp ./.zshrc ~/.zshrc
+    judge "oh my zsh 配置同步"
 
     # 安装 git cz
     nvm install --lts --latest-npm
     npm install -g commitizen cz-conventional-changelog
     echo '{"path": "cz-conventional-changelog"}' > ~/.czrc
     judge "安装 git cz"
+
+    # 安装 vim-plug
+    cp ./.vimrc ~/.vimrc
+    mkdir -p ~/.vim/autoload
+    cd ~/.vim/autoload
+    wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    judge "安装 vim-plug"
 
     # 完成 tmux 配置
     if [ -x "$(command -V tmux)" ]; then
@@ -115,11 +140,13 @@ init_install() {
         judge "配置 tmux"
     else
         if [[ "${ID}" == "centos" ]]; then
-            cd /root
+            cd ~
             wget https://mirrors.aliyun.com/ius/ius-release-el7.rpm
             rpm -Uvh ius-release*rpm
             $INS install -y tmux2u
             judge "安装 tmux"
+        elif [[ "${ID}" == "ubuntu" ]]; then
+            $INS install -y tmux
         fi
         cd $root_path
         cp .tmux.conf ~/.tmux.conf
@@ -128,6 +155,12 @@ init_install() {
         judge "配置 tmux"
     fi
     cd $root_path
+
+    # 启用 zsh
+    echo -e "${GreenBG} The init script is executed successfully, zsh is being started... ${Font}"
+    sleep 3
+    source ~/.zshrc
+    zsh
 }
 
 init_install
