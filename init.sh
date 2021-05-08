@@ -28,12 +28,12 @@ check_system() {
     elif [[ "${ID}" == "debian" && ${VERSION_ID} -ge 8 ]]; then
         echo -e "${OK} ${GreenBG} 当前系统为 Debian ${VERSION_ID} ${VERSION} ${Font}"
         INS="apt"
-        $INS update
+        sudo $INS update -y
         ## 添加 Nginx apt源
     elif [[ "${ID}" == "ubuntu" && $(echo "${VERSION_ID}" | cut -d '.' -f1) -ge 16 ]]; then
         echo -e "${OK} ${GreenBG} 当前系统为 Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${Font}"
         INS="apt"
-        $INS update
+        sudo $INS update -y
     else
         echo -e "${Error} ${RedBG} 当前系统为 ${ID} ${VERSION_ID} 不在支持的系统列表内，安装中断 ${Font}"
         exit 1
@@ -53,13 +53,13 @@ judge() {
 init_install() {
     check_system
     # 安装通用前置软件
-    $INS update -y
-    $INS install -y curl wget git lsof zsh gcc make tar
+    sudo $INS update -y
+    sudo $INS install -y curl wget git lsof zsh gcc make tar
     judge "安装通用前置软件"
 
     # 根据系统安装前置软件
     if [[ "${ID}" == "centos" ]]; then
-        $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
+        sudo $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
         judge "${ID} 前置软件安装"
     elif [[ "${ID}" == "" ]]; then
         sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
@@ -142,10 +142,10 @@ init_install() {
             cd ~
             wget https://mirrors.aliyun.com/ius/ius-release-el7.rpm
             rpm -Uvh ius-release*rpm
-            $INS install -y tmux2u
+            sudo $INS install -y tmux2u
             judge "安装 tmux"
         elif [[ "${ID}" == "ubuntu" ]]; then
-            $INS install -y tmux
+            sudo $INS install -y tmux
         fi
         cd $root_path
         cp .tmux.conf ~/.tmux.conf
@@ -159,7 +159,11 @@ init_install() {
     echo -e "${GreenBG} The init script is executed successfully, zsh is being started... ${Font}"
     sleep 3
     source ~/.zshrc
-    zsh
+    if [[ "$SHELL" == "/bin/zsh" ]]; then
+        sleep 1
+    else
+        zsh
+    fi
 }
 
 init_install
