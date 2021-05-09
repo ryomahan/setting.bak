@@ -80,12 +80,19 @@ init_install() {
     git config --global user.email "ryomahan1996@gmail.com"
     git config --global user.name "ryomahan"
     git config --global push.default simple
+    git config --global  --unset https.https://github.com.proxy 
+    git config --global  --unset http.https://github.com.proxy 
     judge "进行 git 默认配置"
 
     # 安装 oh my zsh
-    cd $SCRIPT_PATH
-    sh ./ohmyzshinstall.sh
-    judge "安装 oh my zsh"
+    if [ -d ${ZSH} ]; then
+        echo -e "${GREEN_BG} oh my zsh is readly. ${FONT}"
+        sleep 1 
+    else
+        cd $SCRIPT_PATH
+        sh ./ohmyzshinstall.sh
+        judge "安装 oh my zsh"
+    fi
 
     cd ${SCRIPT_ROOT_PATH}
     # 安装 nodejs 版本控制器 n
