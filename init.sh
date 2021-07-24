@@ -129,12 +129,12 @@ init_install() {
         sleep 1
     else
         if [ -d ${HOME_PATH}"/.pyenv" ]; then
+            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv is readly. ${FONT}"
+        else
             git config --global --unset https.proxy 
             git config --global --unset http.proxy 
             git clone https://github.com/pyenv/pyenv.git ${HOME_PATH}/.pyenv
             judge "install pyenv"
-        else
-            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv is readly. ${FONT}"
         fi
     fi
 
