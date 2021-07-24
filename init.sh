@@ -107,8 +107,12 @@ init_install() {
         echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         sleep 1
     else
-        curl -L https://git.io/n-install | bash
-        judge "install Node.js version controller n"
+        if [ -d ${HOME_PATH}"/n" ]; then
+            echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
+        else
+            curl -L https://git.io/n-install | bash
+            judge "install Node.js version controller n"
+        fi
     fi
 
     # 安装最新稳定版本 nodejs
