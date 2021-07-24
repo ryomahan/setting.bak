@@ -38,12 +38,9 @@ check_system() {
     elif [[ ${ID} == "debian" && ${VERSION_ID} -ge 8 ]]; then
         echo -e "${OK} ${GREEN_BG} 当前系统为 Debian ${VERSION_ID} ${VERSION} ${FONT}"
         INS="apt"
-        sudo $INS update -y
-        ## 添加 Nginx apt源
     elif [[ ${ID} == "ubuntu" && $(echo ${VERSION_ID} | cut -d '.' -f1) -ge 16 ]]; then
         echo -e "${OK} ${GREEN_BG} 当前系统为 Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${FONT}"
         INS="apt"
-        sudo $INS update -y
     else
         echo -e "${ERROR} ${RED_BG} 当前系统为 ${ID} ${VERSION_ID} 不在支持的系统列表内，安装中断 ${FONT}"
         exit 1
@@ -52,10 +49,10 @@ check_system() {
 
 judge() {
     if [[ 0 -eq $? ]]; then
-        echo -e "${OK} ${GREEN_BG} $1 完成 ${FONT}"
+        echo -e "${OK} ${GREEN_BG} $1 success ${FONT}"
         sleep 1
     else
-        echo -e "${ERROR} ${RED_BG} $1 失败 ${FONT}"
+        echo -e "${ERROR} ${RED_BG} $1 error ${FONT}"
         exit 1
     fi
 }
@@ -64,25 +61,27 @@ init_install() {
     check_system
     # 安装通用前置软件
     sudo $INS update -y
+    sudo $INS upgrade -y
+    judge "update and upgrade system"
     sudo $INS install -y curl wget git lsof zsh gcc make tar
-    judge "安装通用前置软件"
+    judge "install base packages"
 
     # 根据系统安装前置软件
     if [[ ${ID} == "centos" ]]; then
         sudo $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
-        judge "${ID} 前置软件安装"
-    elif [[ ${ID} == "" ]]; then
+        judge "${ID} install centos's base packages"
+    elif [[ ${ID} == "ubuntu" ]]; then
         sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
-        judge "${ID} 前置软件安装"
+        judge "${ID} install ubuntu's base packages"
     fi
 
     # git 配置
     git config --global user.email "ryomahan1996@gmail.com"
     git config --global user.name "ryomahan"
     git config --global push.default simple
-    git config --global  --unset https.https://github.com.proxy 
-    git config --global  --unset http.https://github.com.proxy 
-    judge "进行 git 默认配置"
+    git config --global --unset https.proxy 
+    git config --global --unset http.proxy 
+    judge "set git default config"
 
     # 安装 oh my zsh
     if [ -d ${ZSH} ]; then
@@ -91,7 +90,7 @@ init_install() {
     else
         cd $SCRIPT_PATH
         sh ./ohmyzshinstall.sh
-        judge "安装 oh my zsh"
+        judge "install oh my zsh"
     fi
 
     cd ${SCRIPT_ROOT_PATH}
