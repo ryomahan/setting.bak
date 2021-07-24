@@ -155,13 +155,15 @@ init_install() {
     fi
 
     # 安装 Python 3.8.9 作为默认版本
-    pyenv install 3.8.9
-    pyenv global 3.8.9
-    pyenv shell 3.8.9
-    pyenv local 3.8.9
+    # pyenv install 3.8.9
+    # pyenv global 3.8.9
+    # pyenv shell 3.8.9
+    # pyenv local 3.8.9
 
     # 导入脚本子模块（oh my zsh 插件）
     git submodule init
+    git config --global --unset https.proxy 
+    git config --global --unset http.proxy 
     git submodule update
     judge "setting.bak submodule (oh my zsh plug) import"
     
