@@ -124,7 +124,9 @@ init_install() {
         echo -e "${GREEN_BG} pyenv is readly. ${FONT}"
         sleep 1
     else
-        if [ -d ${HOME_PATH}"/.pyenv"]; then
+        if [ -d ${HOME_PATH}"/.pyenv" ]; then
+            git config --global --unset https.proxy 
+            git config --global --unset http.proxy 
             git clone https://github.com/pyenv/pyenv.git ${HOME_PATH}/.pyenv
             judge "install pyenv"
         else
@@ -137,9 +139,11 @@ init_install() {
         echo -e "${GREEN_BG} pyenv-virtualenv is readly. ${FONT}"
         sleep 1
     else
-        if [ -d "${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv"]; then
+        if [ -d "${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv" ]; then
             echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv is readly. ${FONT}"
         else
+            git config --global --unset https.proxy 
+            git config --global --unset http.proxy 
             git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv
             judge "install pyenv-virtualenv"
         fi
@@ -187,6 +191,8 @@ init_install() {
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
+            git config --global --unset https.proxy 
+            git config --global --unset http.proxy 
             git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
             bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
@@ -206,6 +212,8 @@ init_install() {
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
+            git config --global --unset https.proxy 
+            git config --global --unset http.proxy 
             git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
             bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
