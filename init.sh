@@ -7,6 +7,14 @@
 # desc: personal os init script
 
 # base variable
+readonly CURRENT_USER=$(whoami)
+
+if [[ ${CURRENT_USER} == "root" ]]; then
+    readonly HOME_PATH="/root"
+else
+    readonly HOME_PATH="/home/"${CURRENT_USER}
+fi
+
 readonly SCRIPT_ROOT_PATH=$(
     cd $(dirname ${0})
     pwd
@@ -33,22 +41,22 @@ VERSION=$(echo ${VERSION} | awk -F "[()]" '{print $2}')
 
 check_system() {
     if [[ ${ID} == "centos" && ${VERSION_ID} -ge 7 ]]; then
-        echo -e "${OK} ${GREEN_BG} 当前系统为 Centos ${VERSION_ID} ${VERSION} ${FONT}"
+        echo -e "${OK} ${GREEN_BG} Current system is Centos ${VERSION_ID} ${VERSION} ${FONT}"
         INS="yum"
     elif [[ ${ID} == "debian" && ${VERSION_ID} -ge 8 ]]; then
-        echo -e "${OK} ${GREEN_BG} 当前系统为 Debian ${VERSION_ID} ${VERSION} ${FONT}"
+        echo -e "${OK} ${GREEN_BG} Current system is Debian ${VERSION_ID} ${VERSION} ${FONT}"
         INS="apt"
     elif [[ ${ID} == "ubuntu" && $(echo ${VERSION_ID} | cut -d '.' -f1) -ge 16 ]]; then
-        echo -e "${OK} ${GREEN_BG} 当前系统为 Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${FONT}"
+        echo -e "${OK} ${GREEN_BG} Current system is Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${FONT}"
         INS="apt"
     else
-        echo -e "${ERROR} ${RED_BG} 当前系统为 ${ID} ${VERSION_ID} 不在支持的系统列表内，安装中断 ${FONT}"
+        echo -e "${ERROR} ${RED_BG} Current system is ${ID} ${VERSION_ID} 不在支持的系统列表内，安装中断 ${FONT}"
         exit 1
     fi
 }
 
 judge() {
-    if [[ 0 -eq $? ]]; then
+    if [[ 0 -eq $? || $2 ]]; then
         echo -e "${OK} ${GREEN_BG} $1 success ${FONT}"
         sleep 1
     else
@@ -81,7 +89,7 @@ init_install() {
     git config --global push.default simple
     git config --global --unset https.proxy 
     git config --global --unset http.proxy 
-    judge "set git default config"
+    judge "set git default config" 1
 
     # 安装 oh my zsh
     if [ -d ${ZSH} ]; then
@@ -95,72 +103,97 @@ init_install() {
 
     cd ${SCRIPT_ROOT_PATH}
     # 安装 nodejs 版本控制器 n
-    if [ -x "$(command -V n)" ]; then
-        echo -e "${GREEN_BG} n is readly. ${FONT}"
+    if [ -x "$(command -v n)" ]; then
+        echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         sleep 1
     else
         curl -L https://git.io/n-install | bash
-        judge "安装 nodejs 版本控制器 n"
+        judge "install Node.js version controller n"
     fi
 
     # 安装最新稳定版本 nodejs
-    n latest
+    if [ -x "$(command -v node)" ]; then
+        n latest
+        sleep 1
+    else
+        echo -e "${GREEN_BG} latest nodejs is readly. ${FONT}"
+    fi
 
-    # 安装 python 版本控制器 pyenv 以及其插件 pyenv-virtualenv
+    # 安装 python 版本控制器 pyenv
     if [ -x "$(command -v pyenv)" ]; then
         echo -e "${GREEN_BG} pyenv is readly. ${FONT}"
         sleep 1
     else
-        git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-        judge "安装 pyenv"        
+        if [ -d ${HOME_PATH}"/.pyenv"]; then
+            git clone https://github.com/pyenv/pyenv.git ${HOME_PATH}/.pyenv
+            judge "install pyenv"
+        else
+            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv is readly. ${FONT}"
+        fi
     fi
 
-    if [ -x "$(command --version pyenv  virtualenv)" ]; then
+    # 安装 pyenv 插件 pyenv-virtualenv
+    if [ -x "$(command -v pyenv virtualenvs)" ]; then
         echo -e "${GREEN_BG} pyenv-virtualenv is readly. ${FONT}"
         sleep 1
     else
-        git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-vurtualenv
-        judge "安装 pyenv-virtualenv"
+        if [ -d "${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv"]; then
+            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv is readly. ${FONT}"
+        else
+            git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv
+            judge "install pyenv-virtualenv"
+        fi
+
     fi
 
-    # 安装 Python 3.8.10 作为默认版本
-    pyenv install 3.8.6
-    pyenv global 3.8.6
-    pyenv shell 3.8.6
-    pyenv local 3.8.6
+    # 安装 Python 3.8.9 作为默认版本
+    pyenv install 3.8.9
+    pyenv global 3.8.9
+    pyenv shell 3.8.9
+    pyenv local 3.8.9
 
     # 导入脚本子模块（oh my zsh 插件）
     git submodule init
     git submodule update
-    judge "setting.bak 库子模块（oh my zsh 插件）引入"
+    judge "setting.bak submodule (oh my zsh plug) import"
     
     # 同步 oh my zsh 配置文件
     cd ${SCRIPT_ROOT_PATH}
-    cp -r ./oh-my-zsh/custom/* ~/.oh-my-zsh/custom/
-    cp ./.zshrc ~/.zshrc
+    cp -r ./oh-my-zsh/custom/* ${HOME_PATH}/.oh-my-zsh/custom/
+    cp ./.zshrc ${HOME_PATH}/.zshrc
     judge "oh my zsh 配置同步"
 
     # 安装 git cz
     npm install -g commitizen cz-conventional-changelog
-    echo '{"path": "cz-conventional-changelog"}' > ~/.czrc
+    echo '{"path": "cz-conventional-changelog"}' > ${HOME_PATH}/.czrc
     judge "安装 git cz"
 
     # 安装 vim-plug
-    cp ./.vimrc ~/.vimrc
-    mkdir -p ~/.vim/autoload
-    cd ~/.vim/autoload
-    wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    judge "安装 vim-plug"
+    cp ./.vimrc ${HOME_PATH}/.vimrc
+    if [ -d "${HOME_PATH}/.vim/autoload" ]; then
+        mkdir -p ${HOME_PATH}/.vim/autoload
+    fi
+    if [ -s "${HOME_PATH}/.vim/autoload/plug.vim" ]; then
+        echo -e "${GREEN_BG} vim plug controller vim-plug is readly. ${FONT}"
+    else
+        cd ${HOME_PATH}/.vim/autoload
+        wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        judge "install vim plug controller vim-plug"
+    fi
 
     # 完成 tmux 配置
-    if [ -x "$(command -V tmux)" ]; then
-        cp .tmux.conf ~/.tmux.conf
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-        bash ~/.tmux/plugins/tpm/bin/install_plugins
-        judge "配置 tmux"
+    if [ -x "$(command -v tmux)" ]; then
+        cp .tmux.conf ${HOME_PATH}/.tmux.conf
+        if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
+            echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
+        else
+            git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
+            bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
+            judge "install tmux plug controller tpm"
+        fi
     else
         if [[ ${ID} == "centos" ]]; then
-            cd ~
+            cd ${HOME_PATH}
             wget https://mirrors.aliyun.com/ius/ius-release-el7.rpm
             rpm -Uvh ius-release*rpm
             sudo $INS install -y tmux2u
@@ -169,21 +202,25 @@ init_install() {
             sudo $INS install -y tmux
         fi
         cd ${SCRIPT_ROOT_PATH}
-        cp .tmux.conf ~/.tmux.conf
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-        bash ~/.tmux/plugins/tpm/bin/install_plugins
-        judge "配置 tmux"
+        cp .tmux.conf ${HOME_PATH}/.tmux.conf
+        if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
+            echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
+        else
+            git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
+            bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
+            judge "install tmux plug controller tpm"
+        fi
     fi
     cd ${SCRIPT_ROOT_PATH}
 
     # 启用 zsh
-    echo -e "${GREEN_BG} The init script is executed successfully, zsh is being started... ${FONT}"
+    echo -e "${GREEN_BG} init script is executed successfully, zsh is being started... ${FONT}"
     sleep 3
-    source ~/.zshrc
+    source ${HOME_PATH}/.zshrc
     if [[ ${SHELL} == "/bin/zsh" ]]; then
         sleep 1
     else
-        zsh
+        sudo usermod -s /bin/zsh ${CURRENT_USER}
     fi
 }
 
