@@ -9,5 +9,7 @@ To Do List:
 - [x] oh-my-zsh custom theme file
 
 - [x] centos7 init
+  
+- [x] ubuntu init
 
 - [x] 自动化部署 [30%]

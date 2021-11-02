@@ -1,0 +1,127 @@
+" Ryoma's vimrc
+" 1. install latest vim with python3
+" 2. install vim-plug
+" wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim -O ~/.vim/autoload/plug.vim
+" 3. :PlugInstall
+" 4. fwllow http://ycm-core.github.io/YouCompleteMe/#installation to install YouCompleteMe
+
+" Plugin
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox'
+Plug 'preservim/nerdtree'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'ycm-core/YouCompleteMe'
+call plug#end()
+
+" System base settings
+syntax      on        " highlight
+colorscheme gruvbox
+set background=dark
+
+set number            " open number
+set backspace=2       " make <backspace> useful
+set nocompatible      " hear of anything that might helpful
+set encoding=utf-8    " set codde
+set tabstop=4         " set tab to four spaces
+set softtabstop=4     " set backspace to four spaces 
+set shiftwidth=4      " 
+set expandtab         " use space instead of tab
+set autoindent        " auto tab
+
+" Add separate settings for different file types
+if has("autocmd")
+    autocmd FileType html,css,xml,yaml,javascript set tabstop=2
+    autocmd FileType html,css,xml,yaml,javascript set softtabstop=2
+    autocmd FileType html,css,xml,yaml,javascript set shiftwidth=2
+endif
+
+" map
+
+" Set map leader for myself
+let mapleader=','
+let maplocalleader='\\'
+
+" Set map(use noremap) 
+nnoremap - dd
+nnoremap <leader>ev :split $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>"  viw<esc>a"<esc>"hbi"<esc>lel
+
+inoremap jk     <esc>
+inoremap <c-d>  <esc>ddi
+
+" Use map to realize Move Up/Down
+nnoremap <c-j> mz:m+<cr>`z
+nnoremap <c-k> mz:m-2<cr>`z
+inoremap <c-j> <esc>mz:m+<cr>`zi
+inoremap <c-k> <esc>mz:m-2<cr>`zi
+
+" Use map to realize Home/End
+noremap <c-e> <end>
+noremap <c-a> <home>
+inoremap <c-e> <end>
+inoremap <c-a> <home>
+
+" Set notes shortcut keys(use autocmd and noremap)
+
+" Set abbreviations
+iabbrev @@ ryomahan1996@gmail.com
+
+" Change cursor shape in difference modes
+" from https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
+" z
+map <leader>r :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+    exec "w"
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o %<"
+        exec "!time ./%<"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!time java %<"
+    elseif &filetype == 'sh'
+        :!time bash %
+    elseif &filetype == 'python'
+        exec "!time python %"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
+    elseif &filetype == 'go'
+        exec "!time go run %"
+    elseif &filetype == 'mkd'
+        exec "!~/.vim/markdown.pl % > %.html &"
+        exec "!firefox %.html &"
+    endif
+endfunc
+
+" nerdtree settings
+map <leader>t :NERDTreeToggle<CR>
+
+" 忽略以下文件的显示
+let NERDTreeIgnore=['\.pyc','\~$',
+            \ '\.swp',
+            \ '\.o',
+            \ '.DS_Store',
+            \ '\.orig$',
+            \ '@neomake_',
+            \ '.coverage.',
+            \ '__pycache__$[[dir]]',
+            \ '.pytest_cache$[[dir]]',
+            \ '.git$[[dir]]',
+            \ '.idea[[dir]]',
+            \ '.vscode[[dir]]',
+            \ 'htmlcov[[dir]]',
+            \ 'test-reports[[dir]]',
+            \ '.egg-info$[[dir]]']
+
+" YouCompleteMe settings
+let g:ycm_complete_in_comments=1
+let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_autoclose_preview_window_after_completion=1

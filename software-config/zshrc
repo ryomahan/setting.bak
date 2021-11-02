@@ -7,7 +7,6 @@ ZSH_THEME="custom_ys"
 # oh my zsh plugins
 plugins=(
     git
-    # zsh-proxy
     zsh-autosuggestions
     zsh-syntax-highlighting
 )

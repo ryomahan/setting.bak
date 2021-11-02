@@ -1,0 +1,79 @@
+{
+  "picBed": {
+    "current": "qiniu",
+    "uploader": "qiniu",
+    "smms": {
+      "token": ""
+    },
+    "list": [
+      {
+        "name": "SM.MS图床",
+        "type": "smms",
+        "visible": false
+      },
+      {
+        "name": "腾讯云COS",
+        "type": "tcyun",
+        "visible": false
+      },
+      {
+        "name": "GitHub图床",
+        "type": "github",
+        "visible": false
+      },
+      {
+        "name": "七牛图床",
+        "type": "qiniu",
+        "visible": true
+      },
+      {
+        "name": "Imgur图床",
+        "type": "imgur",
+        "visible": false
+      },
+      {
+        "name": "阿里云OSS",
+        "type": "aliyun",
+        "visible": false
+      },
+      {
+        "name": "又拍云图床",
+        "type": "upyun",
+        "visible": false
+      }
+    ],
+    "qiniu": {
+      "accessKey": "",
+      "area": "z1",
+      "bucket": "img-blanc",
+      "options": "",
+      "path": "/wiki/img",
+      "secretKey": "",
+      "url": "https://img.blanc.site"
+    }
+  },
+  "settings": {
+    "shortKey": {
+      "picgo:upload": {
+        "enable": false,
+        "key": "CommandOrControl+Shift+P",
+        "name": "upload",
+        "label": "快捷上传"
+      }
+    },
+    "server": {
+      "port": 36677,
+      "host": "127.0.0.1",
+      "enable": true
+    },
+    "privacyEnsure": true,
+    "showUpdateTip": true,
+    "autoRename": true,
+    "rename": true,
+    "autoStart": true
+  },
+  "picgoPlugins": {},
+  "debug": true,
+  "PICGO_ENV": "GUI",
+  "needReload": false
+}

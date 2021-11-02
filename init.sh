@@ -50,7 +50,7 @@ check_system() {
         echo -e "${OK} ${GREEN_BG} Current system is Ubuntu ${VERSION_ID} ${UBUNTU_CODENAME} ${FONT}"
         INS="apt"
     else
-        echo -e "${ERROR} ${RED_BG} Current system is ${ID} ${VERSION_ID} 不在支持的系统列表内，安装中断 ${FONT}"
+        echo -e "${ERROR} ${RED_BG} Current system is ${ID} ${VERSION_ID}. Not in support list! Installation interrupted! ${FONT}"
         exit 1
     fi
 }
