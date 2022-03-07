@@ -177,7 +177,7 @@ init_install() {
 
     # 完成 tmux 配置
     if [ -x "$(command -v tmux)" ]; then
-        cp ./software-config/tmux.conf ${HOME_PATH}/.tmux.conf
+        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME_PATH}/.tmux.conf
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
@@ -196,7 +196,7 @@ init_install() {
             sudo $INS install -y tmux
         fi
         cd ${SCRIPT_ROOT_PATH}
-        cp ./software-config/tmux.conf ${HOME_PATH}/.tmux.conf
+        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME_PATH}/.tmux.conf
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
