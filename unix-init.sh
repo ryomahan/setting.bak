@@ -144,11 +144,6 @@ init_install() {
 
     fi
 
-    # 安装 Python 3.9.10 作为默认版本
-    pyenv install 3.9.10
-    judge "install python 3.9.10"
-    pyenv global 3.9.10
-
     # 导入脚本子模块（oh my zsh 插件）
     git submodule init
     git submodule update
@@ -182,7 +177,7 @@ init_install() {
 
     # 完成 tmux 配置
     if [ -x "$(command -v tmux)" ]; then
-        cp .tmux.conf ${HOME_PATH}/.tmux.conf
+        cp ./software-config/tmux.conf ${HOME_PATH}/.tmux.conf
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
