@@ -85,7 +85,7 @@ init_install() {
     fi
 
     # 安装 oh my zsh
-    if [ -d "${HOME_PATH}/.oh_my_zsh" ]; then
+    if [ -d "${HOME}/.oh-my-zsh" ]; then
         echo -e "${GREEN_BG} oh my zsh is readly. ${FONT}"
         sleep 1 
     else
