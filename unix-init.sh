@@ -1,7 +1,7 @@
 #!/bin/bash
-# version: 0.3.2
+# version: 0.4.1
 # author: ryomahan
-# date: 2019-09-03 02:54:30
+# date: 2022-03-07 10:13:30
 # main: ryomahan1996@gmail.com
 # blog: https://blog.blanc.site
 # desc: personal os init script
@@ -69,8 +69,9 @@ init_install() {
     check_system
     # 安装通用前置软件
     sudo $INS update -y
+    judge "update system"
     sudo $INS upgrade -y
-    judge "update and upgrade system"
+    judge "upgrade system"
     sudo $INS install -y curl wget git lsof zsh gcc make tar
     judge "install base packages"
 
@@ -83,14 +84,6 @@ init_install() {
         judge "${ID} install ubuntu's base packages"
     fi
 
-    # git 配置
-    git config --global user.email "ryomahan1996@gmail.com"
-    git config --global user.name "ryomahan"
-    git config --global push.default simple
-    git config --global --unset https.proxy 
-    git config --global --unset http.proxy 
-    judge "set git default config" 1
-
     # 安装 oh my zsh
     if [ -d ${ZSH} ]; then
         echo -e "${GREEN_BG} oh my zsh is readly. ${FONT}"
@@ -102,6 +95,7 @@ init_install() {
     fi
 
     cd ${SCRIPT_ROOT_PATH}
+
     # 安装 nodejs 版本控制器 n
     if [ -x "$(command -v n)" ]; then
         echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
@@ -131,8 +125,6 @@ init_install() {
         if [ -d ${HOME_PATH}"/.pyenv" ]; then
             echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv is readly. ${FONT}"
         else
-            git config --global --unset https.proxy 
-            git config --global --unset http.proxy 
             git clone https://github.com/pyenv/pyenv.git ${HOME_PATH}/.pyenv
             judge "install pyenv"
         fi
@@ -146,41 +138,38 @@ init_install() {
         if [ -d "${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv" ]; then
             echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv is readly. ${FONT}"
         else
-            git config --global --unset https.proxy 
-            git config --global --unset http.proxy 
             git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv
             judge "install pyenv-virtualenv"
         fi
 
     fi
 
-    # 安装 Python 3.8.9 作为默认版本
-    # pyenv install 3.8.9
-    # pyenv global 3.8.9
-    # pyenv shell 3.8.9
-    # pyenv local 3.8.9
+    # 安装 Python 3.9.10 作为默认版本
+    pyenv install 3.9.10
+    judge "install python 3.9.10"
+    pyenv global 3.9.10
 
     # 导入脚本子模块（oh my zsh 插件）
     git submodule init
-    git config --global --unset https.proxy 
-    git config --global --unset http.proxy 
     git submodule update
     judge "setting.bak submodule (oh my zsh plug) import"
     
     # 同步 oh my zsh 配置文件
     cd ${SCRIPT_ROOT_PATH}
     cp -r ./oh-my-zsh/custom/* ${HOME_PATH}/.oh-my-zsh/custom/
-    cp ./.zshrc ${HOME_PATH}/.zshrc
-    judge "oh my zsh 配置同步"
+    cp ./software-config/unix-zshrc ${HOME_PATH}/.zshrc
+    judge "oh my zsh config sync"
 
     # 安装 git cz
     npm install -g commitizen cz-conventional-changelog
     echo '{"path": "cz-conventional-changelog"}' > ${HOME_PATH}/.czrc
-    judge "安装 git cz"
+    judge "install git cz"
 
     # 安装 vim-plug
-    cp ./.vimrc ${HOME_PATH}/.vimrc
+    cp ./software-config/vimrc ${HOME_PATH}/.vimrc
     if [ -d "${HOME_PATH}/.vim/autoload" ]; then
+        echo -e "${GREEN_BG} .vim/autoload is readly. ${FONT}"
+    else
         mkdir -p ${HOME_PATH}/.vim/autoload
     fi
     if [ -s "${HOME_PATH}/.vim/autoload/plug.vim" ]; then
@@ -197,8 +186,6 @@ init_install() {
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
-            git config --global --unset https.proxy 
-            git config --global --unset http.proxy 
             git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
             bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
@@ -218,8 +205,6 @@ init_install() {
         if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
-            git config --global --unset https.proxy 
-            git config --global --unset http.proxy 
             git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
             bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
@@ -235,6 +220,7 @@ init_install() {
         sleep 1
     else
         sudo usermod -s /bin/zsh ${CURRENT_USER}
+        judge "change default shell, please logout after this script"
     fi
 }
 

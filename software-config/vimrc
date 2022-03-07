@@ -65,9 +65,6 @@ inoremap <c-a> <home>
 
 " Set notes shortcut keys(use autocmd and noremap)
 
-" Set abbreviations
-iabbrev @@ ryomahan1996@gmail.com
-
 " Change cursor shape in difference modes
 " from https://vim.fandom.com/wiki/Change_cursor_shape_in_different_modes
 let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
@@ -122,6 +119,14 @@ let NERDTreeIgnore=['\.pyc','\~$',
             \ '.egg-info$[[dir]]']
 
 " YouCompleteMe settings
-let g:ycm_complete_in_comments=1
-let g:ycm_min_num_of_chars_for_completion=2
-let g:ycm_autoclose_preview_window_after_completion=1
+set completeopt=menu,menuone
+let g:ycm_complete_in_comments = 1
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_path_to_python_interpreter = '/Users/ryoma/.pyenv/shims/python'
+let g:ycm_semantic_triggers =  {
+    \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+    \ 'cs,lua,javascript': ['re!\w{2}'],
+    \ }
+let g:ycm_filetype_whitelist = {"c":1,"cpp":1,"python":1,"sh":1,"java":1,"js":1}
