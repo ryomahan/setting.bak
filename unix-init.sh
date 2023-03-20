@@ -70,8 +70,8 @@ init_install() {
     # 安装通用前置软件
     sudo $INS update -y
     judge "update system"
-    sudo $INS upgrade -y
-    judge "upgrade system"
+    # sudo $INS upgrade -y
+    # judge "upgrade system"
     sudo $INS install -y curl wget git lsof zsh gcc make tar
     judge "install base packages"
 
@@ -80,7 +80,7 @@ init_install() {
         sudo $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
         judge "${ID} install centos's base packages"
     elif [[ ${ID} == "ubuntu" ]]; then
-        sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+        sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
         judge "${ID} install ubuntu's base packages"
     fi
 

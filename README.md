@@ -1,6 +1,6 @@
 ## Overview
 
-Self use system initialization script.
+Self-use system initialization script and software config file backup.
 
 unix-init.sh: using on most unix system
 
@@ -11,7 +11,7 @@ mac-init.sh: using on macOS
 * auto install tmux;
 * auto install git commit plug;
 * auto install zsh and oh my zsh;
-* provide zshrc, vimrc and tmux.config
+* provide zshrc, vimrc and tmux.config;
 * auto install Node version management n and install lst node;
 * auto install Python version management pyenv and pyenv-virtualenv;
 
@@ -41,4 +41,14 @@ vim
   
 - [x] ubuntu init
 
-- [x] 自动化部署 [70%]
+- [ ] 快速启动项目脚手架
+    - [ ] Django + DRF | RBAC Settings 
+    - [ ] FastAPI | ORM RBAC Settings
+    - [ ] Vue
+    - [ ] Taro
+    - [ ] React
+    - [ ] Next.js
+
+- [ ] 基础能力库
+    - [ ] Wechat | service pay
+    - [ ] axios everywhere

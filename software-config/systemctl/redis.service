@@ -1,0 +1,14 @@
+[Unit]
+Description=Redis server
+After=network.target
+ 
+[Service]
+Type=forking
+ExecStart=/usr/bin/redis-server /path_to_redis.conf
+ExecReload=/usr/bin/redis-server -s reload
+ExecStop=/usr/bin/redis-server -s stop
+Restart=on-failure
+PrivateTmp=true
+ 
+[Install]
+WantedBy=multi-user.target
