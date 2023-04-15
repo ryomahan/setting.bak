@@ -16,6 +16,12 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom configuration
 export LC_ALL=en_US.UTF-8
 
+## add alias
+alias getip="curl ipinfo.io"
+alias dockerps="docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Status}}\""
+alias dockerpsa="docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Ports}}\\t{{.Status}}\""
+alias dockerpsaa="docker ps -a --format \"table {{.ID}}\\t{{.Names}}\\t{{.Ports}}\\t{{.Status}}\""
+
 ## add PATH
 
 ### Pyenv
@@ -27,7 +33,6 @@ if which pyenv-virtualenv-init > /dev/null;
   then eval "$(pyenv virtualenv-init -)";
 fi
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PYTHON_CONFIGURE_OPTS="--enable-framework"
 
 ### n
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"

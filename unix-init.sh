@@ -1,5 +1,5 @@
 #!/bin/bash
-# version: 0.4.1
+# version: 0.5.0
 # author: ryomahan
 # date: 2022-03-07 10:13:30
 # main: ryomahan1996@gmail.com
@@ -72,7 +72,7 @@ init_install() {
     judge "update system"
     # sudo $INS upgrade -y
     # judge "upgrade system"
-    sudo $INS install -y curl wget git lsof zsh gcc make tar
+    sudo $INS install -y curl wget git lsof zsh gcc make tar unzip
     judge "install base packages"
 
     # 根据系统安装前置软件
@@ -80,21 +80,19 @@ init_install() {
         sudo $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
         judge "${ID} install centos's base packages"
     elif [[ ${ID} == "ubuntu" ]]; then
-        sudo $INS install -y  build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev llvm libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev
+        sudo $INS install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
         judge "${ID} install ubuntu's base packages"
     fi
 
     # 安装 oh my zsh
+    cd $SCRIPT_PATH
     if [ -d "${HOME}/.oh-my-zsh" ]; then
         echo -e "${GREEN_BG} oh my zsh is readly. ${FONT}"
         sleep 1 
     else
-        cd $SCRIPT_PATH
         sh ./ohmyzshinstall.sh
         judge "install oh my zsh"
     fi
-
-    cd ${SCRIPT_ROOT_PATH}
 
     # 安装 nodejs 版本控制器 n
     if [ -x "$(command -v n)" ]; then
@@ -104,10 +102,12 @@ init_install() {
         if [ -d ${HOME_PATH}"/n" ]; then
             echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         else
-            curl -L https://git.io/n-install | bash
+            sh ./n-install
             judge "install Node.js version controller n"
         fi
     fi
+
+    cd ${SCRIPT_ROOT_PATH}
 
     # 安装最新稳定版本 nodejs
     if [ -x "$(command -v node)" ]; then
