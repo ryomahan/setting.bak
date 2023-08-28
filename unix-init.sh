@@ -102,7 +102,7 @@ init_install() {
         if [ -d ${HOME_PATH}"/n" ]; then
             echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         else
-            sh ./n-install
+            curl -L https://bit.ly/n-install | bash
             judge "install Node.js version controller n"
         fi
     fi
