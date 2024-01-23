@@ -1,8 +1,7 @@
-# Path to your oh-my-zsh installation.
 export ZSH="~/.oh-my-zsh"
 
-# theme
 ZSH_THEME="custom_ys"
+HIST_STAMPS="yyyy-mm-dd"
 
 # oh my zsh plugins
 plugins=(
@@ -11,15 +10,14 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-HIST_STAMPS="yyyy-mm-dd"
 
-# Custom configuration
+# export env
 export LC_ALL=en_US.UTF-8
 
-## add PATH
-
+## PATH
 ### Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/shims:$PATH"
 if which pyenv-activate > /dev/null;
   then eval "$(pyenv init -)";
 fi

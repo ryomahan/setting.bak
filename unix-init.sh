@@ -171,8 +171,7 @@ init_install() {
         echo -e "${GREEN_BG} vim plug controller vim-plug is readly. ${FONT}"
     else
         cd ${HOME_PATH}/.vim/autoload
-        # wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        wget https://ghproxy.com/https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         judge "install vim plug controller vim-plug"
     fi
 

@@ -1,31 +1,29 @@
-# Path to your oh-my-zsh installation.
 export ZSH="${HOME}/.oh-my-zsh"
 
-# theme
 ZSH_THEME="custom_ys"
+HIST_STAMPS="yyyy-mm-dd"
 
-# oh my zsh plugins
 plugins=(
     git
+    zsh-proxy
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
 
-HIST_STAMPS="yyyy-mm-dd"
 
-# Custom configuration
+# export env
 export LC_ALL=en_US.UTF-8
 
-## add alias
+## alias
 alias getip="curl ipinfo.io"
 alias dockerps="docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Status}}\""
 alias dockerpsa="docker ps --format \"table {{.ID}}\\t{{.Names}}\\t{{.Ports}}\\t{{.Status}}\""
 alias dockerpsaa="docker ps -a --format \"table {{.ID}}\\t{{.Names}}\\t{{.Ports}}\\t{{.Status}}\""
 
-## add PATH
-
+## PATH
 ### Pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/shims:$PATH"
 if which pyenv-activate > /dev/null;
   then eval "$(pyenv init -)";
 fi
