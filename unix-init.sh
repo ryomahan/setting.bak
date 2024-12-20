@@ -80,7 +80,7 @@ init_install() {
         sudo $INS install -y epel-release openssl-devel mysql-devel bzip2-devel readline-devel sqlite-devel libffi-devel
         judge "${ID} install centos's base packages"
     elif [[ ${ID} == "ubuntu" ]]; then
-        sudo $INS install -y ibbz2-dev libsqlite3-dev liblzma-dev build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
+        sudo $INS install -y libbz2-dev libsqlite3-dev liblzma-dev build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
         judge "${ID} install ubuntu's base packages"
     fi
 
