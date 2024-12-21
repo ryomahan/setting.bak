@@ -99,7 +99,7 @@ init_install() {
         echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         sleep 1
     else
-        if [ -d ${HOME_PATH}"/n" ]; then
+        if [ -d ${HOME}"/n" ]; then
             echo -e "${GREEN_BG} Node.js version controller n is readly. ${FONT}"
         else
             curl -L https://bit.ly/n-install | bash
@@ -122,10 +122,10 @@ init_install() {
         echo -e "${GREEN_BG} pyenv is readly. ${FONT}"
         sleep 1
     else
-        if [ -d ${HOME_PATH}"/.pyenv" ]; then
-            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv is readly. ${FONT}"
+        if [ -d ${HOME}"/.pyenv" ]; then
+            echo -e "${GREEN_BG} ${HOME}/.pyenv is readly. ${FONT}"
         else
-            git clone https://github.com/pyenv/pyenv.git ${HOME_PATH}/.pyenv
+            git clone https://github.com/pyenv/pyenv.git ${HOME}/.pyenv
             judge "install pyenv"
         fi
     fi
@@ -135,10 +135,10 @@ init_install() {
         echo -e "${GREEN_BG} pyenv-virtualenv is readly. ${FONT}"
         sleep 1
     else
-        if [ -d "${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv" ]; then
-            echo -e "${GREEN_BG} ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv is readly. ${FONT}"
+        if [ -d "${HOME}/.pyenv/plugins/pyenv-vurtualenv" ]; then
+            echo -e "${GREEN_BG} ${HOME}/.pyenv/plugins/pyenv-vurtualenv is readly. ${FONT}"
         else
-            git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME_PATH}/.pyenv/plugins/pyenv-vurtualenv
+            git clone https://github.com/pyenv/pyenv-virtualenv.git ${HOME}/.pyenv/plugins/pyenv-vurtualenv
             judge "install pyenv-virtualenv"
         fi
 
@@ -151,43 +151,43 @@ init_install() {
     
     # 同步 oh my zsh 配置文件
     cd ${SCRIPT_ROOT_PATH}
-    cp -r ./oh-my-zsh/custom/* ${HOME_PATH}/.oh-my-zsh/custom/
-    cp ./software-config/unix-zshrc ${HOME_PATH}/.zshrc
+    cp -r ./oh-my-zsh/custom/* ${HOME}/.oh-my-zsh/custom/
+    cp ./software-config/unix-zshrc ${HOME}/.zshrc
     judge "oh my zsh config sync"
 
     # 安装 git cz
     npm install -g commitizen cz-conventional-changelog
-    echo '{"path": "cz-conventional-changelog"}' > ${HOME_PATH}/.czrc
+    echo '{"path": "cz-conventional-changelog"}' > ${HOME}/.czrc
     judge "install git cz"
 
     # 安装 vim-plug
-    cp ./software-config/vimrc ${HOME_PATH}/.vimrc
-    if [ -d "${HOME_PATH}/.vim/autoload" ]; then
+    cp ./software-config/vimrc ${HOME}/.vimrc
+    if [ -d "${HOME}/.vim/autoload" ]; then
         echo -e "${GREEN_BG} .vim/autoload is readly. ${FONT}"
     else
-        mkdir -p ${HOME_PATH}/.vim/autoload
+        mkdir -p ${HOME}/.vim/autoload
     fi
-    if [ -s "${HOME_PATH}/.vim/autoload/plug.vim" ]; then
+    if [ -s "${HOME}/.vim/autoload/plug.vim" ]; then
         echo -e "${GREEN_BG} vim plug controller vim-plug is readly. ${FONT}"
     else
-        cd ${HOME_PATH}/.vim/autoload
+        cd ${HOME}/.vim/autoload
         wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
         judge "install vim plug controller vim-plug"
     fi
 
     # 完成 tmux 配置
     if [ -x "$(command -v tmux)" ]; then
-        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME_PATH}/.tmux.conf
-        if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
+        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME}/.tmux.conf
+        if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
-            git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
-            bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
+            git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+            bash ${HOME}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
         fi
     else
         if [[ ${ID} == "centos" ]]; then
-            cd ${HOME_PATH}
+            cd ${HOME}
             wget https://mirrors.aliyun.com/ius/ius-release-el7.rpm
             rpm -Uvh ius-release*rpm
             sudo $INS install -y tmux2u
@@ -196,12 +196,12 @@ init_install() {
             sudo $INS install -y tmux
         fi
         cd ${SCRIPT_ROOT_PATH}
-        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME_PATH}/.tmux.conf
-        if [ -d "${HOME_PATH}/.tmux/plugins/tpm" ]; then
+        cp ${SCRIPT_ROOT_PATH}/software-config/tmux.conf ${HOME}/.tmux.conf
+        if [ -d "${HOME}/.tmux/plugins/tpm" ]; then
             echo -e "${GREEN_BG} tmux plug controller tpm is readly. ${FONT}"
         else
-            git clone https://github.com/tmux-plugins/tpm ${HOME_PATH}/.tmux/plugins/tpm
-            bash ${HOME_PATH}/.tmux/plugins/tpm/bin/install_plugins
+            git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+            bash ${HOME}/.tmux/plugins/tpm/bin/install_plugins
             judge "install tmux plug controller tpm"
         fi
     fi
@@ -210,7 +210,7 @@ init_install() {
     # 启用 zsh
     echo -e "${GREEN_BG} init script is executed successfully, zsh is being started... ${FONT}"
     sleep 3
-    source ${HOME_PATH}/.zshrc
+    source ${HOME}/.zshrc
     if [[ ${SHELL} == "/bin/zsh" ]]; then
         sleep 1
     else
