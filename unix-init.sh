@@ -77,7 +77,7 @@ init_install() {
 
     # 根据系统安装前置软件
     if [[ ${ID} == "centos" ]]; then
-        sudo $INS install -y openssl-devel bzip2-devel libffi-devel zlib-devel xz-devel
+        sudo $INS install -y openssl-devel bzip2-devel libffi-devel zlib-devel xz-devel sqlite-devel readline-devel
         judge "${ID} install centos's base packages"
     elif [[ ${ID} == "ubuntu" ]]; then
         sudo $INS install -y libbz2-dev libsqlite3-dev liblzma-dev build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
